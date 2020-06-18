@@ -11,7 +11,7 @@ const input = document.getElementById("loc-input");
 const submit = document.getElementById("loc-submit");
 const toggleUnits = document.getElementById("switch-units");
 
-const weatherArr = [];
+let weatherArr = [];
 
 const getWeather = async (city) => {
   try {
@@ -74,11 +74,36 @@ const renderCards = () => {
   }
 };
 
+const convertUnits = (newUnit) => {
+  console.log(weatherArr);
+  newArr = [...weatherArr];
+  if (newUnit !== "metric") {
+    newArr.forEach((obj) => {
+      const currTemp = obj.temp;
+      const newTemp = currTemp * (9 / 5) + 32;
+      const newTempRounded = parseFloat(newTemp).toFixed(2);
+      obj.temp = newTempRounded;
+    });
+  } else {
+    newArr.forEach((obj) => {
+      const currTemp = obj.temp;
+      const newTemp = (currTemp - 32) * (5 / 9);
+      const newTempRounded = parseFloat(newTemp).toFixed(2);
+      obj.temp = newTempRounded;
+    });
+    weatherArr = newArr;
+    console.log(weatherArr);
+  }
+};
+
 const applyEventListeners = () => {
   input.addEventListener("submit", submitWeather);
   submit.addEventListener("click", submitWeather);
   toggleUnits.addEventListener("click", function () {
+    // switch unit
     units === "metric" ? (units = "imperial") : (units = "metric");
+    // convert temperature data to new unit
+    convertUnits(units);
     renderCards();
   });
 };
