@@ -1,4 +1,3 @@
-// let city = "London";
 let units = "metric";
 let loading = true;
 
@@ -115,5 +114,3 @@ const submitWeather = (event) => {
 
 getWeather("London");
 applyEventListeners();
-
-// updateInfo();
